@@ -13,6 +13,8 @@ export default class EventList extends Component {
         const events = this.props.events;
         return (
             <div>
+
+
             <h3>Events</h3>
 
 
@@ -21,7 +23,7 @@ export default class EventList extends Component {
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Magnitude</th>
-                    <th scope="col">Title</th>
+                    <th scope="col">Type</th>
                     <th scope="col">Place</th>
                     <th scope="col">Time</th>
                     </tr>
@@ -40,7 +42,6 @@ export default class EventList extends Component {
                 })}
                 </tbody>
             </table>
-
             </div>
         );
 

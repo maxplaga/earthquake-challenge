@@ -44,7 +44,7 @@ export default class SearchBox extends Component {
                         <br/>
                         <label htmlFor="eq-numberSelect">
                             Number of results
-                            <select id="eq-numberSelect" name="numberOfResults" onChange={this.handleChange}>
+                            <select id="eq-numberSelect" className="custom-select" name="numberOfResults" onChange={this.handleChange}>
                                 <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="25">25</option>

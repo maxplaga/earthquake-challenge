@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import "./Page.css";
 
 import SearchBox from "./SearchBox/SearchBox.jsx";
-
 import EventList from "./EventList/EventList.jsx";
+import Map from "./Map/Map.jsx"
 
 export default class Page extends Component {
     constructor(props) {
@@ -36,6 +36,8 @@ export default class Page extends Component {
                 <p>You can find all the latest earthquakes on this site.</p>
                 <SearchBox/>
                 <EventList events={this.state.events}/>
+                <Map></Map>
+
             </div>
         );
     }
