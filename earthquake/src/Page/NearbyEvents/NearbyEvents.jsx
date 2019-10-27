@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import 'react-dates/initialize';
 
 import EventList from "../EventList/EventList.jsx";
-import Map from "../Map/Map.jsx"
 
 import moment from 'moment';
 
@@ -104,8 +103,8 @@ export default class NearbyEvents extends Component {
                     })}
                     focusedInput={this.state.focusedInput}
                     onFocusChange={focusedInput => this.setState({focusedInput})}
+                    isOutsideRange={() => false}
                 />
-
 
                 <button type="button" className="btn btn-primary"
                         onClick={this.onClickRefresh}>Go

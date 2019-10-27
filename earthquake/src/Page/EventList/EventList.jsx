@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export default class EventListco extends Component {
+export default class EventList extends Component {
 
     convertMillisecondsToDate = (number) => {
         const d = new Date(number);
@@ -29,7 +29,7 @@ export default class EventListco extends Component {
                         <td>{elem.properties.type}</td>
                         <td>{elem.properties.place}</td>
                         <td>
-                            { this.convertMillisecondsToDate(elem.properties.time)}
+                            {this.convertMillisecondsToDate(elem.properties.time)}
                         </td>
                         </tr>
                 })}

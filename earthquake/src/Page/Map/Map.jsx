@@ -45,12 +45,11 @@ export default class Map extends Component {
         return (
             <div>
                 <h3>Your position</h3>
-                <p>position:</p>
 
                 <button type="button" className="btn btn-primary" onClick={this.setGeoLocation}>Locate me!</button>
 
                 {geoLocation &&
-                    <div className="card" style={{ width: "18rem"}}>
+                    <div className="card mt-3">
                         <img src={this.getImg()} className="card-img-top" alt="Map with your location"/>
                             <div className="card-body">
                                 <h5 className="card-title">Your location</h5>
