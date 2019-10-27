@@ -15,42 +15,53 @@ export default class NearbyEvents extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            geoLocation: undefined,
             startDate: moment().subtract('7', 'days'),
             endDate: moment(),
             focusedInput: null,
             nearbyEvents: [],
-            radiuskm: 10,
+            radiuskm: 200,
         };
         this.handleChange = this.handleChange.bind(this);
     }
-
 
     componentDidMount() {
         this.getNearbyEvents();
     }
 
     getNearbyEvents = () => {
-        const format = 'geojson';
-        const startTime = this.state.startDate.toISOString();
-        const endTime = this.state.endDate.toISOString();
-        const limit = '5';
-        const latitude = '52.403';
-        const longitude = '13.0626';
-        const maxradiuskm = this.state.radiuskm;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition (
+                (geoLocation) => {
+                    const format = 'geojson';
+                    const startTime = this.state.startDate.toISOString();
+                    const endTime = this.state.endDate.toISOString();
+                    const limit = '5';
 
-        fetch(`https://earthquake.usgs.gov/fdsnws/event/1/query?format=${format}&starttime=${startTime}&endtime=${endTime}&limit=${limit}&latitude=${latitude}&longitude=${longitude}&maxradiuskm=${maxradiuskm}`)
-            .then((response) => response.json())
-            .then((json) => {
-                this.setState({nearbyEvents: json.features});
-            })
+                    const latitude =  geoLocation.coords.latitude;
+                    const longitude = geoLocation.coords.longitude;
+
+                    const maxradiuskm = this.state.radiuskm;
+
+                    fetch(`https://earthquake.usgs.gov/fdsnws/event/1/query?format=${format}&starttime=${startTime}&endtime=${endTime}&limit=${limit}&latitude=${latitude}&longitude=${longitude}&maxradiuskm=${maxradiuskm}`)
+                        .then((response) => response.json())
+                        .then((json) => {
+                            this.setState({nearbyEvents: json.features});
+                        })
+                }
+            );
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+
     };
 
     onClickRefresh = () => {
         this.getNearbyEvents();
     };
 
-    handleChange (evt) {
-        this.setState({ [evt.target.name]: evt.target.value });
+    handleChange(evt) {
+        this.setState({[evt.target.name]: evt.target.value});
     }
 
 
@@ -66,8 +77,12 @@ export default class NearbyEvents extends Component {
 
                         <h3>Nearby events</h3>
 
-                        <label htmlFor="customRange1">Search radius in km</label>
-                        <input name="radiuskm" type="range" className="custom-range" id="customRange1" min="10" max="3000" value={this.state.radiuskm} onChange={this.handleChange}/>
+                        <div className="d-inline-block">
+                            <label htmlFor="customRange1">Search radius in km</label>
+                            <input name="radiuskm" type="range" className="custom-range"
+                                   id="customRange1" min="10" max="3000" value={this.state.radiuskm}
+                                   onChange={this.handleChange}/>
+                        </div>
                         <p>{this.state.radiuskm}</p>
 
 

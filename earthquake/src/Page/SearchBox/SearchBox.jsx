@@ -32,11 +32,7 @@ export default class SearchBox extends Component {
 
                 <div>
                     <form id="eq-form-criteria" onSubmit={this.handleSubmit}>
-                        <label>
-                            <input name="radius" type="number" min="1" max="100" value={this.state.radius}
-                                   onChange={this.handleChange}/>
-                        </label>
-                        <button type="button"
+                       <button type="button"
                                 onClick={this.handleSubmit}>Search
                         </button>
                         <br/>
