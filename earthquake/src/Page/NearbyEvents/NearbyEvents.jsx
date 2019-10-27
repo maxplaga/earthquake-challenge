@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 
-import 'react-dates/initialize';
-
 import EventList from "../EventList/EventList.jsx";
 
 import moment from 'moment';
 
+import 'react-dates/initialize';
 import {DateRangePicker} from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 
@@ -64,6 +63,11 @@ export default class NearbyEvents extends Component {
         this.setState({[evt.target.name]: evt.target.value});
     }
 
+    handleNumberOfResultsChange = (evt) => {
+        this.setState({[evt.target.name]: evt.target.value});
+        this.getNearbyEvents();
+    };
+
 
     render() {
         const nearbyEvents = this.state.nearbyEvents;
@@ -72,44 +76,56 @@ export default class NearbyEvents extends Component {
             <div>
                 <h3>Nearby events</h3>
 
-                <div className="d-inline-block">
-                    <label htmlFor="customRange1">Search radius in km</label>
-                    <input name="radiuskm" type="range" className="custom-range"
-                           id="customRange1" min="10" max="3000" value={this.state.radiuskm}
-                           onChange={this.handleChange}/>
+
+                <div className="d-flex justify-content-between">
+                    <div className="d-flex align-self-center">
+                        <label htmlFor="customRange1">Search radius in km
+                            <input name="radiuskm" type="range" className="custom-range"
+                                   id="customRange1" min="10" max="3000" value={this.state.radiuskm}
+                                   onChange={this.handleChange}/>
+                        </label>
+                        <p>{this.state.radiuskm}</p>
+                    </div>
+
+                    <div className="align-self-center">
+                        <DateRangePicker
+                            startDate={this.state.startDate}
+                            startDateId="your_unique_start_date_id"
+                            endDate={this.state.endDate}
+                            endDateId="your_unique_end_date_id"
+                            onDatesChange={({startDate, endDate}) => this.setState({
+                                startDate,
+                                endDate
+                            })}
+                            focusedInput={this.state.focusedInput}
+                            onFocusChange={focusedInput => this.setState({focusedInput})}
+                            isOutsideRange={() => false}
+                        />
+                    </div>
+                    <div className="align-self-center">
+                        <button type="button" className="btn btn-primary"
+                                onClick={this.onClickRefresh}>Go
+                        </button>
+                    </div>
+
+
+                    <div className="d-flex align-self-center">
+                        <label htmlFor="eq-numberSelect">
+                            Number of results
+                        </label>
+                        <select id="eq-numberSelect" className="custom-select"
+                                name="numberOfResults"
+                                value={this.state.numberOfResults}
+                                onChange={this.handleNumberOfResultsChange}>
+                            <option value="1">1</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="100">100</option>
+                        </select>
+
+                    </div>
                 </div>
-                <p>{this.state.radiuskm}</p>
-
-                <label htmlFor="eq-numberSelect">
-                    Number of results
-                    <select id="eq-numberSelect" className="custom-select" name="numberOfResults"
-                            value={this.state.numberOfResults} onChange={this.handleChange}>
-                        <option value="1">1</option>
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="100">100</option>
-                    </select>
-                </label>
-
-                <DateRangePicker
-                    startDate={this.state.startDate}
-                    startDateId="your_unique_start_date_id"
-                    endDate={this.state.endDate}
-                    endDateId="your_unique_end_date_id"
-                    onDatesChange={({startDate, endDate}) => this.setState({
-                        startDate,
-                        endDate
-                    })}
-                    focusedInput={this.state.focusedInput}
-                    onFocusChange={focusedInput => this.setState({focusedInput})}
-                    isOutsideRange={() => false}
-                />
-
-                <button type="button" className="btn btn-primary"
-                        onClick={this.onClickRefresh}>Go
-                </button>
-
                 <EventList events={nearbyEvents}/>
             </div>
         );
