@@ -28,23 +28,13 @@ export default class SearchBox extends Component {
     render() {
         return (
             <div>
-                <h3>Find erupting events</h3>
-
                 <div>
                     <form id="eq-form-criteria" onSubmit={this.handleSubmit}>
                        <button type="button"
                                 onClick={this.handleSubmit}>Search
                         </button>
                         <br/>
-                        <label htmlFor="eq-numberSelect">
-                            Number of results
-                            <select id="eq-numberSelect" className="custom-select" name="numberOfResults" onChange={this.handleChange}>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="100">100</option>
-                            </select>
-                        </label>
+
                     </form>
                 </div>
             </div>

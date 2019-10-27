@@ -21,6 +21,7 @@ export default class NearbyEvents extends Component {
             focusedInput: null,
             nearbyEvents: [],
             radiuskm: 200,
+            numberOfResults: 5,
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -31,14 +32,14 @@ export default class NearbyEvents extends Component {
 
     getNearbyEvents = () => {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition (
+            navigator.geolocation.getCurrentPosition(
                 (geoLocation) => {
                     const format = 'geojson';
                     const startTime = this.state.startDate.toISOString();
                     const endTime = this.state.endDate.toISOString();
-                    const limit = '5';
+                    const limit = this.state.numberOfResults;
 
-                    const latitude =  geoLocation.coords.latitude;
+                    const latitude = geoLocation.coords.latitude;
                     const longitude = geoLocation.coords.longitude;
 
                     const maxradiuskm = this.state.radiuskm;
@@ -69,49 +70,48 @@ export default class NearbyEvents extends Component {
         const nearbyEvents = this.state.nearbyEvents;
 
         return (
-            <div className="row">
+            <div>
+                <h3>Nearby events</h3>
 
-
-                <div className="col">
-                    <div className="shadow p-3 mb-5 bg-white rounded">
-
-                        <h3>Nearby events</h3>
-
-                        <div className="d-inline-block">
-                            <label htmlFor="customRange1">Search radius in km</label>
-                            <input name="radiuskm" type="range" className="custom-range"
-                                   id="customRange1" min="10" max="3000" value={this.state.radiuskm}
-                                   onChange={this.handleChange}/>
-                        </div>
-                        <p>{this.state.radiuskm}</p>
-
-
-                        <DateRangePicker
-                            startDate={this.state.startDate}
-                            startDateId="your_unique_start_date_id"
-                            endDate={this.state.endDate}
-                            endDateId="your_unique_end_date_id"
-                            onDatesChange={({startDate, endDate}) => this.setState({
-                                startDate,
-                                endDate
-                            })}
-                            focusedInput={this.state.focusedInput}
-                            onFocusChange={focusedInput => this.setState({focusedInput})}
-                        />
-
-
-                        <button type="button" className="btn btn-primary"
-                                onClick={this.onClickRefresh}>Go
-                        </button>
-
-                        <EventList events={nearbyEvents}/>
-                    </div>
+                <div className="d-inline-block">
+                    <label htmlFor="customRange1">Search radius in km</label>
+                    <input name="radiuskm" type="range" className="custom-range"
+                           id="customRange1" min="10" max="3000" value={this.state.radiuskm}
+                           onChange={this.handleChange}/>
                 </div>
-                <div className="col">
-                    <div className="shadow p-3 mb-5 bg-white rounded">
-                        <Map/>
-                    </div>
-                </div>
+                <p>{this.state.radiuskm}</p>
+
+                <label htmlFor="eq-numberSelect">
+                    Number of results
+                    <select id="eq-numberSelect" className="custom-select" name="numberOfResults"
+                            value={this.state.numberOfResults} onChange={this.handleChange}>
+                        <option value="1">1</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="100">100</option>
+                    </select>
+                </label>
+
+                <DateRangePicker
+                    startDate={this.state.startDate}
+                    startDateId="your_unique_start_date_id"
+                    endDate={this.state.endDate}
+                    endDateId="your_unique_end_date_id"
+                    onDatesChange={({startDate, endDate}) => this.setState({
+                        startDate,
+                        endDate
+                    })}
+                    focusedInput={this.state.focusedInput}
+                    onFocusChange={focusedInput => this.setState({focusedInput})}
+                />
+
+
+                <button type="button" className="btn btn-primary"
+                        onClick={this.onClickRefresh}>Go
+                </button>
+
+                <EventList events={nearbyEvents}/>
             </div>
         );
     }

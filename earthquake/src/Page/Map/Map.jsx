@@ -5,8 +5,7 @@ export default class Map extends Component {
         super(props);
         this.state = {
             geoLocation: undefined,
-        }
-        ;
+        };
     }
 
     componentDidMount() {

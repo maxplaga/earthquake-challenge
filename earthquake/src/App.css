@@ -1,17 +1,27 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
+.app-logo {
   height: 40vmin;
 }
 
-.App-header {
+.app-header {
+  padding-left: 50px;
   background-color: #282c34;
-  height: 40px;
+  height: 5vh;
+  min-height: 100px;
   color: white;
 }
 
-.App-link {
+.app-header-title {
+  color: white;
+}
+
+.app-header-subtitle {
+  color: #a7a7a7;
+}
+
+.app-link {
   color: #09d3ac;
+}
+
+.eq-page {
+  padding-top: 30px;;
 }
