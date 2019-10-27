@@ -3,21 +3,19 @@ import "./Page.css";
 
 import SearchBox from "./SearchBox/SearchBox.jsx";
 import EventList from "./EventList/EventList.jsx";
-import Map from "./Map/Map.jsx"
+import NearbyEvents from "./NearbyEvents/NearbyEvents.jsx"
 
 export default class Page extends Component {
     constructor(props) {
         super(props);
         this.state = {
             latestEvents: [],
-            nearbyEvents: [],
         };
     }
 
 
     componentDidMount() {
         this.getLatestEvents();
-        this.getNearbyEvents();
     }
 
     getLatestEvents = () => {
@@ -33,26 +31,8 @@ export default class Page extends Component {
 
     };
 
-    getNearbyEvents = () => {
-        const format = 'geojson';
-        const startTime = '2016-01-01';
-        const endTime = '2019-10-03';
-        const limit = '5';
-        const latitude = '52.403';
-        const longitude = '13.0626';
-        const maxradiuskm = '2000';
-
-        fetch(`https://earthquake.usgs.gov/fdsnws/event/1/query?format=${format}&starttime=${startTime}&endtime=${endTime}&limit=${limit}&latitude=${latitude}&longitude=${longitude}&maxradiuskm=${maxradiuskm}`)
-            .then((response) => response.json())
-            .then((json) => {
-                this.setState({nearbyEvents: json.features});
-            })
-
-    };
-
     render() {
         const latestEvents = this.state.latestEvents;
-        const nearbyEvents = this.state.nearbyEvents;
 
         return (
             <div className="eq-page">
@@ -66,15 +46,8 @@ export default class Page extends Component {
                     </div>
 
                     <SearchBox/>
-                    <div className="row">
-                        <div className="col">
-                            <h3>Events near you:</h3>
-                            <EventList events={nearbyEvents}/>
-                        </div>
-                        <div className="col">
-                            <Map></Map>
-                        </div>
-                    </div>
+
+                    <NearbyEvents/>
                 </div>
 
             </div>

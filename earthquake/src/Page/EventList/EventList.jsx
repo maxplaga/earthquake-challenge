@@ -1,23 +1,16 @@
 import React, {Component} from 'react';
 
-export default class EventList extends Component {
+export default class EventListco extends Component {
 
     convertMillisecondsToDate = (number) => {
-        var d = new Date(number);
-        var dateString = d.getUTCFullYear() +"/"+ (d.getUTCMonth()+1) +"/"+ d.getUTCDate() + " - " + d.getUTCHours() + ":" + d.getUTCMinutes() ;
-        console.log(dateString);
-        return dateString;
+        const d = new Date(number);
+        return d.getUTCFullYear() +"/"+ (d.getUTCMonth()+1) +"/"+ d.getUTCDate() + " - " + d.getUTCHours() + ":" + d.getUTCMinutes() ;
     };
 
     render() {
         const events = this.props.events;
         return (
             <div>
-
-
-            <h3>Events</h3>
-
-
             <table className="table">
                 <thead>
                 <tr>
