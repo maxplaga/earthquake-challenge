@@ -13,7 +13,6 @@ export default class NearbyEvents extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            geoLocation: undefined,
             startDate: moment().subtract('7', 'days'),
             endDate: moment(),
             focusedInput: null,
