@@ -63,8 +63,7 @@ export default class NearbyEvents extends Component {
     }
 
     handleNumberOfResultsChange = (evt) => {
-        this.setState({[evt.target.name]: evt.target.value});
-        this.getNearbyEvents();
+        this.setState({[evt.target.name]: evt.target.value}, () => this.getNearbyEvents());
     };
 
 
